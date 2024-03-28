@@ -158,4 +158,95 @@ public class Medium {
             }
         }
     }
+
+    @Test
+    void hj27() {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] split = line.split(" ");
+            int index = Integer.parseInt(split[split.length - 1]);
+            String x = split[split.length - 2];
+
+            char[] xChars = x.toCharArray();
+            Arrays.sort(xChars);
+            // 记录找到的兄弟单词
+            List<String> list = new ArrayList<>();
+            for (int i = 1; i < split.length - 2; i++) {
+                String xx = split[i];
+                if (x.length() != xx.length() || x.equals(xx)) {
+                    continue;
+                }
+
+                char[] xxChars = xx.toCharArray();
+                Arrays.sort(xxChars);
+                if (Arrays.equals(xChars, xxChars)) {
+                    list.add(xx);
+                }
+            }
+
+            // 输出
+            System.out.println(list.size());
+            if (list.size() >= index) {
+                list.sort(Comparator.naturalOrder());
+                System.out.println(list.get(index - 1));
+            }
+        }
+    }
+
+    @Test
+    void hj29() {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextLine()) {
+            String src = scanner.nextLine();
+            String dst = scanner.nextLine();
+
+            char[] srcChars = src.toCharArray();
+            for (int i = 0; i < srcChars.length; i++) {
+                srcChars[i] = dealEncrypt(srcChars[i]);
+            }
+
+            char[] dstChars = dst.toCharArray();
+            for (int i = 0; i < dstChars.length; i++) {
+                dstChars[i] = dealDecrypt(dstChars[i]);
+            }
+
+            System.out.println(new String(srcChars));
+            System.out.println(new String(dstChars));
+        }
+    }
+
+    private static char dealEncrypt(char srcChar) {
+        if ('A' <= srcChar && srcChar < 'Z') {
+            return (char) (srcChar + 33);
+        } else if ('a' <= srcChar && srcChar < 'z') {
+            return (char) (srcChar - 31);
+        } else if ('Z' == srcChar) {
+            return 'a';
+        } else if ('z' == srcChar) {
+            return 'A';
+        } else if ('0' <= srcChar && srcChar < '9') {
+            return (char) (srcChar + 1);
+        } else if (srcChar == '9') {
+            return '0';
+        }
+        return 0;
+    }
+
+    private static char dealDecrypt(char srcChar) {
+        if ('A' < srcChar && srcChar <= 'Z') {
+            return (char) (srcChar + 31);
+        } else if ('a' < srcChar && srcChar <= 'z') {
+            return (char) (srcChar - 33);
+        } else if ('A' == srcChar) {
+            return 'z';
+        } else if ('a' == srcChar) {
+            return 'Z';
+        } else if ('0' < srcChar && srcChar <= '9') {
+            return (char) (srcChar - 1);
+        } else if (srcChar == '0') {
+            return '9';
+        }
+        return 0;
+    }
 }

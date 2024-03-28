@@ -214,4 +214,57 @@ public class Harder {
             }
         }
     }
+
+    @Test
+    void hj30() {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            // 1、字符串合并
+            line = line.replace(" ", "");
+            char[] chars = line.toCharArray();
+            // 2、字符串排序
+            // 拆分
+            List<Character> odd = new ArrayList<>();
+            List<Character> even = new ArrayList<>();
+            int length = line.length();
+            for (int i = 0; i < length; i++) {
+                if (i % 2 == 0) {
+                    even.add(chars[i]);
+                } else {
+                    odd.add(chars[i]);
+                }
+            }
+            // 排序
+            odd.sort(Comparator.comparingInt(o -> o));
+            even.sort(Comparator.comparingInt(o -> o));
+            // 合并
+            for (int i = 0; i < even.size(); i++) {
+                chars[i * 2] = even.get(i);
+            }
+            for (int i = 0; i < odd.size(); i++) {
+                chars[i * 2 + 1] = odd.get(i);
+            }
+            // 3、转换
+            for (int i = 0; i < chars.length; i++) {
+                char aChar = chars[i];
+                if ('0' <= aChar && aChar <= '9' || 'A' <= aChar && aChar <= 'F' || 'a' <= aChar && aChar <= 'f') {
+                    chars[i] = deal(aChar);
+                }
+            }
+
+            // 4、输出
+            System.out.println(new String(chars));
+        }
+    }
+
+    private static char deal(char aChar) {
+        StringBuilder bs = new StringBuilder(Integer.toBinaryString(Integer.parseInt(aChar + "", 16)));
+        while (bs.length() < 4) {
+            bs.insert(0, '0');
+        }
+        String newBs = bs.reverse().toString();
+        String hs = Integer.toHexString(Integer.parseInt(newBs, 2));
+        return Character.toUpperCase(hs.charAt(0));
+    }
 }
