@@ -176,5 +176,122 @@ public class Simple {
         }
     }
 
+    @Test
+    void hj21() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            char[] chars = line.toCharArray();
+            char[] newChars = new char[chars.length];
+            for (int i = 0; i < chars.length; i++) {
+                char aChar = chars[i];
+                char newChar = aChar;
 
+                if ('a' <= aChar && aChar <= 'z') {
+                    switch (aChar) {
+                        case 'a':
+                        case 'b':
+                        case 'c':
+                            newChar = '2';
+                            break;
+                        case 'd':
+                        case 'e':
+                        case 'f':
+                            newChar = '3';
+                            break;
+                        case 'g':
+                        case 'h':
+                        case 'i':
+                            newChar = '4';
+                            break;
+                        case 'j':
+                        case 'k':
+                        case 'l':
+                            newChar = '5';
+                            break;
+                        case 'm':
+                        case 'n':
+                        case 'o':
+                            newChar = '6';
+                            break;
+                        case 'p':
+                        case 'q':
+                        case 'r':
+                        case 's':
+                            newChar = '7';
+                            break;
+                        case 't':
+                        case 'u':
+                        case 'v':
+                            newChar = '8';
+                            break;
+                        default:
+                            newChar = '9';
+                    }
+                } else if ('A' <= aChar && aChar < 'Z') {
+                    newChar = (char) (Character.toLowerCase(aChar) + 1);
+                } else if (aChar == 'Z') {
+                    newChar = 'a';
+                }
+
+                newChars[i] = newChar;
+            }
+            System.out.println(new String(newChars));
+        }
+    }
+
+    @Test
+    void hj22() {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextInt()) {
+            int n = scanner.nextInt();
+            if (n == 0) {
+                break;
+            }
+
+            int s = 0;
+            while (n >= 3) {
+                int y = n % 3;
+
+                n = n / 3;
+                s += n;
+
+                n += y;
+            }
+            if (n == 2) {
+                s++;
+            }
+            System.out.println(s);
+        }
+    }
+
+    @Test
+    void hj23() {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNextLine()) {
+            int[] ints = new int[26];
+
+            String line = scanner.nextLine();
+            char[] chars = line.toCharArray();
+            for (final char aChar : chars) {
+                ints[aChar - 'a']++;
+            }
+
+            int min = 20;
+            for (final int anInt : ints) {
+                if (anInt == 0) {
+                    continue;
+                }
+                if (anInt < min) {
+                    min = anInt;
+                }
+            }
+
+            for (final char aChar : chars) {
+                if (ints[aChar - 'a'] > min) {
+                    System.out.printf("%c", aChar);
+                }
+            }
+        }
+    }
 }
